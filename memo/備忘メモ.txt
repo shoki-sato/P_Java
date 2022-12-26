@@ -1,0 +1,103 @@
+●JShell
+　起動：jshell
+　終了：/exit
+
+●エスケープ
+　「"」のような特別な意味をもつ特殊文字を文字として出力するためにエスケープが必要
+　（Windows：¥、Mac:\）
+　例）入力　"文字列に\"を含み\s改行\nする"
+　　　出力　文字列に"を含み　改行
+　　　　　　する
+　　※「\"」のような、エスケープするための並びをエスケープシーケンスという
+
+●プログラムが動かない３段階
+　①構文エラー
+　②例外
+　③期待と違う実行結果
+
+●メソッド
+　値.メソッド名
+　例）○大文字に変換
+　　　　入力："test" .toUpperCase();
+　　　　出力："TEST"
+　　　○文字の長さを出力
+　　　　入力："test" .length();
+　　　　出力：4
+　　　○指定した回数繰り返す
+　　　　入力："test" .repeat(3);
+　　　　出力："testtesttest"
+　　　○文字列の置換
+　　　　入力："test" .replace("es", "")
+　　　　出力："tt"
+　　　○文字列の一部を返す
+　　　　入力："test" .substring(1)
+　　　　出力："est"
+　　　○文字列のフォーマット（%sに文字列、%dに数値の引数が入る（「%,d」とすると3桁区切りでカンマ））
+　　　　入力："%sと%s、%,d回" .formatted("test","sample", 1000)
+　　　　出力："testとsample、1,000回"
+　　　　入力：String.format("%sと%s", "test", "sample")
+       出力："testとsample"
+
+●メソッド検索のコツ
+　Javaのバージョンを含めて検索
+　例）Java17　文字列
+
+●円周率
+　Math.PI
+
+●キャスト
+　jshell> double d = 3.14
+　jshell> int i = (int) d
+　i ==> 3
+　（逆は精度が失われるため、エラーとなる）
+
+●型変換
+　・文字列　→　数値
+　　jshell> int a = Integer.parseInt("3")
+　　a ==> 3
+　・数値　→　文字列
+　　jshell> String  = String.valueOf(123)
+　　s ==> "123"
+
+●現在日時の取得
+　jshell> java.time.LocalDate.now()
+　$34 ==> 2022-12-26
+　jshell> java.time.LocalTime.now()
+　$35 ==> 21:11:02.092894
+
+●日時の指定
+　jshell> LocalDate.of(2022,12,26)
+　$38 ==> 2022-12-26
+
+●インポート
+　import java.time.*
+　→　インポートしたことで、メソッド名のみで実行可能になる
+　　　jshell> LocalDate.now()
+　　　$37 ==> 2022-12-26
+
+●日付のフォーマット
+　//前提の作成 jshell> var today = LocalDateTime.now()
+　// 　　　　　today ==> 2022-12-26T21:27:42.264726
+
+　jshell> "%tH時%tM分".formatted(today, today)
+　$40 ==> "21時27分"
+ 　↓　%の前に<を入れることで、直前の書式と同じ値を使うことが可能
+　jshell> "%tH時%<tM分".formatted(today)
+　$41 ==> "21時27分"
+
+●日付のフォーマット②
+　formattedメソッドでは、「2022年1月1日」のように一桁の月日に０をつけない、ということが出来ない
+　→　DateTimeFormatterクラスを使う
+
+　jshell> var formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy年M月　ｋ日")
+　formatter ==> Value(YearOfEra,4,19,EXCEEDS_PAD)'年'Value(MinuteOfHour)'月'Value(DayOfMonth)'日'
+　jshell> formatter.format(LocalDate.of(2022, 1, 1))
+　$51 ==> "2022年1月1日"
+
+●BigDecimal　→　書いた通りの値で計算するためのクラス
+　//普通に計算すると、誤差が出ることがある
+　　jshell> 579 * 0.05
+　　$60 ==> 28.950000000000003
+　//記述が長くなってしまうが、BigDecimalを使うと正しく計算ができる
+　　jshell> BigDecimal.valueOf(579).multiply(BigDecimal.valueOf(0.05))
+　　$59 ==> 28.95
