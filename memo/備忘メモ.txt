@@ -89,7 +89,7 @@
 　formattedメソッドでは、「2022年1月1日」のように一桁の月日に０をつけない、ということが出来ない
 　→　DateTimeFormatterクラスを使う
 
-　jshell> var formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy年M月　ｋ日")
+　jshell> var formatter = java.tjsheime.format.DateTimeFormatter.ofPattern("yyyy年M月　ｋ日")
 　formatter ==> Value(YearOfEra,4,19,EXCEEDS_PAD)'年'Value(MinuteOfHour)'月'Value(DayOfMonth)'日'
 　jshell> formatter.format(LocalDate.of(2022, 1, 1))
 　$51 ==> "2022年1月1日"
